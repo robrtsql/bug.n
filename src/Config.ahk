@@ -263,6 +263,19 @@ Config_readinAny() {
   If (Config_readinCpu Or Config_readinDiskLoad Or Config_readinMemoryUsage Or Config_readinNetworkLoad)
     text .= ResourceMonitor_getText()
 
+  objWMIService := ComObjGet("winmgmts:{impersonationLevel=impersonate}!\\.\root\OpenHardwareMonitor")
+  colItems := objWMIService.ExecQuery("SELECT Value FROM Sensor WHERE Name='CPU Package' AND SensorType='Temperature'")._NewEnum
+  while colItems[objItem]
+  {
+    text .= "| CPU:  " Round(objItem.Value) "C "
+  }
+
+  colItems := objWMIService.ExecQuery("SELECT Value FROM Sensor WHERE Name='GPU Core' AND SensorType='Temperature'")._NewEnum
+  while colItems[objItem]
+  {
+    text .= "| GPU:  " Round(objItem.Value) "C "
+  }
+
   Return, text
 }
 
