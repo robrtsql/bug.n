@@ -111,7 +111,8 @@ Config_init() {
   If (SubStr(A_OSVersion, 1, 3) = "10.") {
     Config_borderWidth    := 0
     Config_borderPadding  := -1
-    Config_showBorder     := True
+    ;; Disable "Windows 10 cannot disable borders" feature
+    ;; Config_showBorder     := True
     Config_selBorderColor := ""
   }
   
